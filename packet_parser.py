@@ -2,10 +2,6 @@
 # project 2, group 7
 # NSSA 220
 
-# TODO
-# Change return type to write to filterd/ instead
-# for calculate to read
-
 def parse_packet(line):
     """
     convert one icmp summary line into a structured dictionary
@@ -69,6 +65,41 @@ def parse_packets(icmp_summary):
             parsed_packets.append(packet)
 
     return parsed_packets
+
+
+def write_filtered_csv(parsed_packets, output_file):
+    """
+    writes parsed packet dictionaries to a given CSV file
+    """
+
+    if not parsed_packets:
+        return
+
+    fieldnames = ["time", "src", "dst", "type", "bytes", "id", "seq", "ttl"]
+
+    with open(output_file, "w", newline="") as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+        writer.writeheader()
+
+        for packet in parsed_packets:
+            writer.writerow(packet)
+
+
+def process_node_file(input_file):
+    """
+    processes a single node file and writes filtered data to CSV
+    """
+
+    lines = readNCAP(input_file)
+
+    parsed = parse_packets(lines)
+
+    output_file = input_file.replace(".txt", "_filtered.csv")
+
+    write_filtered_csv(parsed, output_file)
+
+    print(f"Created: {output_file}")
 
 def test():
     testPacket = "1 0.000000       192.168.200.1         192.168.100.1         ICMP     74     Echo (ping) request  id=0x0001, seq=14/3584, ttl=128 (reply in 2)" 
