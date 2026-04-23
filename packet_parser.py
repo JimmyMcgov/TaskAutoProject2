@@ -2,6 +2,10 @@
 # project 2, group 7
 # NSSA 220
 
+# TODO
+# Change return type to write to filterd/ instead
+# for calculate to read
+
 def parse_packet(line):
     """
     convert one icmp summary line into a structured dictionary
@@ -30,12 +34,12 @@ def parse_packet(line):
         return None
 
     # icmp id (hex → int)
-    id_part = info.split("id=")[1].split(",")[0]
-    icmp_id = int(id_part, 16)
+    # id_part = info.split("id=")[1].split(",")[0]
+    # icmp_id = int(id_part, 16)
 
     # sequence number
-    seq_part = info.split("seq=")[1].split("/")[0]
-    seq = int(seq_part)
+    # seq_part = info.split("seq=")[1].split("/")[0]
+    # seq = int(seq_part)
 
     # TTL
     ttl_part = info.split("ttl=")[1].split()[0]
@@ -47,8 +51,8 @@ def parse_packet(line):
         "dst": dst,
         "type": pkt_type,
         "bytes": length,
-        "id": icmp_id,
-        "seq": seq,
+        # "id": icmp_id,
+        # "seq": seq,
         "ttl": ttl
     }
 
