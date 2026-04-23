@@ -14,9 +14,6 @@ def parse_packet(line):
 
     parts = line.split()
 
-    # if len(parts) < 7:
-    #     return None
-
     # fields
     time = float(parts[1])
     src = parts[2]
@@ -72,3 +69,11 @@ def parse_packets(icmp_summary):
             parsed_packets.append(packet)
 
     return parsed_packets
+
+def test():
+    testPacket = "1 0.000000       192.168.200.1         192.168.100.1         ICMP     74     Echo (ping) request  id=0x0001, seq=14/3584, ttl=128 (reply in 2)" 
+    returnedMap = parse_packet(testPacket)
+    for key in returnedMap:
+        print(key, returnedMap[key])
+
+test()
