@@ -3,7 +3,7 @@
 def readNCAP(txt_path):
     icmp_lines = []
 
-    with open(txt_path, "r", errors="ignore") as file:
+    with open(txt_path, "r", errors = "ignore") as file:
         for line in file:
             stripped = line.strip()
 

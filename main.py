@@ -10,59 +10,20 @@ def main():
         "Captures/Node4.txt"
         ]
     
-    # PUT INSIDE CALCULATE
-    packetDB = {
-        "request": 
-        {
-            # 1 & 2
-            "totalSent": 0,
-            "totalRecieved": 0,
-
-            # 5 - 8
-            # based on frame/length
-            "sentBytes": 0,
-            "recievedBytes": 0,
-            # based on payload
-            "payloadSentBytes": 0,
-            "payloadRecievedBytes": 0,
-
-            # 9
-            "totalTTL": 0,
-
-            # 10 & 11
-            "avgThrough": 0,
-            "avgGood": 0,
-
-            # 12 & 13
-            "totalDelay": 0,
-            "totalHops": 0
-        },
-
-        "reply":
-        {
-            # just these two for replies
-            "totalSent": 0,
-            "totalRecieved": 0,
-        },
-    }
-    
-
     nodeCount = 1
     for nodePath in filepaths:
-        validPackets = filter.readNCAP(nodePath)
+        # Read valid icmp entries in a 
+        # node. Drops unreachables
+        icmpList = filter.readNCAP(nodePath)
 
-        # creates Node#_filtered.txt
-        parser.PLACEHOLD(validPackets)
+        # Passes valid icmp list into parser
+        # Parser then creates a node#_filtered.csv file
+        # for compute
+        parser.process_node_file(icmpList, nodeCount)
 
-        # change depending on final path and file extention
-        with open("filtered/Node{nodeCount}_filtered.txt") as node:
-            someEntry = node.readline()
-            computedValues = compute.PLACEHOLD(someEntry)
-
-            # identifier will be implemented 
-            # return structure finalized
-            for value in computedValues:
-                print(value)
+        # Reads a node#_filtered.csv and outputs contents
+        # in a single aggregate file
+        compute.calculate_metrics()
 
         # Seperator between each summary
         nodeCount += 1

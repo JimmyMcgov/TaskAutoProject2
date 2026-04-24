@@ -2,6 +2,9 @@
 # project 2, group 7
 # NSSA 220
 
+import csv
+from pathlib import Path
+
 def parse_packet(line):
     """
     convert one icmp summary line into a structured dictionary
@@ -79,32 +82,18 @@ def write_filtered_csv(parsed_packets, output_file):
 
     with open(output_file, "w", newline="") as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-
         writer.writeheader()
 
         for packet in parsed_packets:
             writer.writerow(packet)
 
 
-def process_node_file(input_file):
+def process_node_file(icmpList, nodeCount):
     """
     processes a single node file and writes filtered data to CSV
     """
-
-    lines = readNCAP(input_file)
-
-    parsed = parse_packets(lines)
-
-    output_file = input_file.replace(".txt", "_filtered.csv")
-
+    parsed = parse_packets(icmpList)
+    output_file = f"filtered/Node{nodeCount}_filtered.csv"
+    Path(output_file).touch()
     write_filtered_csv(parsed, output_file)
-
-    print(f"Created: {output_file}")
-
-def test():
-    testPacket = "1 0.000000       192.168.200.1         192.168.100.1         ICMP     74     Echo (ping) request  id=0x0001, seq=14/3584, ttl=128 (reply in 2)" 
-    returnedMap = parse_packet(testPacket)
-    for key in returnedMap:
-        print(key, returnedMap[key])
-
-test()
+    print(f"Packet_parser.py created: {output_file}")
