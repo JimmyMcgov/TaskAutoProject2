@@ -22,9 +22,9 @@ def parse_packet(line):
     info = " ".join(parts[6:])
 
     # determine packet type
-    if "request" in info:
+    if "request" in parts:
         pkt_type = "request"
-    elif "reply" in info:
+    elif "reply" in parts:
         pkt_type = "reply"
     else:
         return None
