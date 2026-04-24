@@ -18,7 +18,7 @@ def calculate_metrics(parsed_file, node_id=1):
     HEADER_SIZE = 42 #ethernet(14) + IP(20) + ICMP(8)
     try:
         with open(parsed_file, mode="r") as f:
-            reader = csv.dictreader(f)
+            reader = csv.DictReader(f)
             for row in reader:
                 t = float(row['time'])
                 b = float(row['bytes'])
@@ -74,7 +74,7 @@ def calculate_metrics(parsed_file, node_id=1):
         #mapping to output format
         output_rows = [
                 [node_id, 'Size', 'Requests Sent', stats['req_sent']],
-                [node_id, 'Size', 'Requests Recieved', stats['rep_recv']],
+                [node_id, 'Size', 'Requests Recieved', stats['req_recv']],
                 [node_id, 'Size', 'Replies Sent', stats['rep_sent']],
                 [node_id, 'Size', 'Replies Recived', stats['rep_recv']],
                 [node_id, 'Size', 'Request Bytes Sent', stats['bytes_req_sent']],
@@ -85,7 +85,7 @@ def calculate_metrics(parsed_file, node_id=1):
                 [node_id, 'Time', 'Request Throughput (kB/sec)', round(thru,1)],
                 [node_id, 'Time', 'Request Goodput (kB/sec)', round(good, 1)],
                 [node_id, 'Time', 'Average Reply Delay (us)', round(avg_delay_us, 2)],
-                [node_id, 'Distance', 'Average Request Hop Count', round(ave_hops, 2)]
+                [node_id, 'Distance', 'Average Request Hop Count', round(avg_hops, 2)]
         ]
 
         script_dir = os.path.dirname(__file__)

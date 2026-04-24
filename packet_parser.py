@@ -30,12 +30,12 @@ def parse_packet(line):
         return None
 
     # icmp id (hex → int)
-    # id_part = info.split("id=")[1].split(",")[0]
-    # icmp_id = int(id_part, 16)
+    id_part = info.split("id=")[1].split(",")[0]
+    icmp_id = int(id_part, 16)
 
     # sequence number
-    # seq_part = info.split("seq=")[1].split("/")[0]
-    # seq = int(seq_part)
+    seq_part = info.split("seq=")[1].split("/")[0]
+    seq = int(seq_part)
 
     # TTL
     ttl_part = info.split("ttl=")[1].split()[0]
@@ -47,8 +47,8 @@ def parse_packet(line):
         "dst": dst,
         "type": pkt_type,
         "bytes": length,
-        # "id": icmp_id,
-        # "seq": seq,
+        "id": icmp_id,
+        "seq": seq,
         "ttl": ttl
     }
 
@@ -97,3 +97,6 @@ def process_node_file(icmpList, nodeCount):
     Path(output_file).touch()
     write_filtered_csv(parsed, output_file)
     print(f"Packet_parser.py created: {output_file}")
+
+    # used by compute
+    return output_file
