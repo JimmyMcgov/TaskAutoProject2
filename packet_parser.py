@@ -11,7 +11,7 @@ def parse_packet(line):
     returns None if the line is invalid or not a request/reply
     """
 
-    parts = line.split()
+    parts = line.strip().split()
 
     # fields
     time = float(parts[1])
