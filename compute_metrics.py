@@ -1,5 +1,6 @@
 import csv
-import os
+# import os
+from pathlib import Path
 import sys
 
 def calculate_metrics(parsed_file, node_id=1):
@@ -84,29 +85,41 @@ def calculate_metrics(parsed_file, node_id=1):
 
         #mapping to output format
         output_rows = [
-                [node_id, 'Size', 'Requests Sent', stats['req_sent']],
-                [node_id, 'Size', 'Requests Recieved', stats['req_recieved']],
-                [node_id, 'Size', 'Replies Sent', stats['rep_sent']],
-                [node_id, 'Size', 'Replies Recived', stats['rep_recieved']],
-                [node_id, 'Size', 'Request Bytes Sent', stats['bytes_req_sent']],
-                [node_id, 'Size', 'Request Bytes Recieved', stats['bytes_req_recv']],
-                [node_id, 'Size', 'Request Data Sent', stats['payload_req_sent']],
-                [node_id, 'Size', 'Request Data Recieved', stats['payload_req_recv']],
-                [node_id, 'Time', 'Average RTT (ms)', round(avg_rtt_ms, 2)],
-                [node_id, 'Time', 'Request Throughput (kB/sec)', round(thru, 1)],
-                [node_id, 'Time', 'Request Goodput (kB/sec)', round(good, 1)],
-                [node_id, 'Time', 'Average Reply Delay (us)', round(avg_delay_us, 2)],
-                [node_id, 'Distance', 'Average Request Hop Count', round(avg_hops, 2)]
+            ['Node', 'Category', 'Metric', 'Value'],
+            [node_id, 'Size', 'Requests Sent', stats['req_sent']],
+            [node_id, 'Size', 'Requests Recieved', stats['req_recieved']],
+            [node_id, 'Size', 'Replies Sent', stats['rep_sent']],
+            [node_id, 'Size', 'Replies Recived', stats['rep_recieved']],
+            [node_id, 'Size', 'Request Bytes Sent', stats['bytes_req_sent']],
+            [node_id, 'Size', 'Request Bytes Recieved', stats['bytes_req_recv']],
+            [node_id, 'Size', 'Request Data Sent', stats['payload_req_sent']],
+            [node_id, 'Size', 'Request Data Recieved', stats['payload_req_recv']],
+            [node_id, 'Time', 'Average RTT (ms)', round(avg_rtt_ms, 2)],
+            [node_id, 'Time', 'Request Throughput (kB/sec)', round(thru, 1)],
+            [node_id, 'Time', 'Request Goodput (kB/sec)', round(good, 1)],
+            [node_id, 'Time', 'Average Reply Delay (us)', round(avg_delay_us, 2)],
+            [node_id, 'Distance', 'Average Request Hop Count', round(avg_hops, 2)]
         ]
 
-        script_dir = os.path.dirname(__file__)
-        file_path = os.path.join(script_dir, 'project_2_results.csv')
+        file_path = f"computed/project_2_Node{node_id}_results.csv"
+        Path("computed/").mkdir(exist_ok = True)
+        Path(file_path).touch()
 
-        fileExists = os.path.exists('project_2_results.csv')
-        with open(file_path, mode='a', newline='') as csvfile:
+        # script_dir = os.path.dirname(__file__)
+        # file_path = os.path.join(script_dir, 'project_2_results.csv')
+        # fileExists = os.path.exists(f'computed/project_2_Node{node_id}_results.csv')
+
+
+        # script_dir = os.path.dirname(__file__)
+        # file_path = os.path.join(script_dir, 'project_2_results.csv')
+        # fileExists = os.path.exists('project_2_results.csv')
+
+        with open(file_path, mode = 'a', newline = '') as csvfile:
             writer = csv.writer(csvfile)
-            if not fileExists:
-                writer.writerow(['Node', 'Category', 'Metric', 'Value'])
+            # if not fileExists:
+            # if not Path(file_path).is_file():
+            #     writer.writerow(['Node', 'Category', 'Metric', 'Value'])
+            
             writer.writerows(output_rows)
 
     except Exception as e:
