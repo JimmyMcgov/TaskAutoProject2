@@ -40,3 +40,17 @@ Node,Category,Metric,Value
 3,Time,Request Goodput (kB/sec),7740.2
 3,Time,Average Reply Delay (us),2695.18
 3,Distance,Average Request Hop Count,1.0
+Node,Category,Metric,Value
+3,Size,Requests Sent,49
+3,Size,Requests Recieved,17
+3,Size,Replies Sent,17
+3,Size,Replies Recived,49
+3,Size,Request Bytes Sent,21486
+3,Size,Request Bytes Recieved,5546
+3,Size,Request Data Sent,19428
+3,Size,Request Data Recieved,4832
+3,Time,Average RTT (ms),0.05
+3,Time,Request Throughput (kB/sec),8560.2
+3,Time,Request Goodput (kB/sec),7740.2
+3,Time,Average Reply Delay (us),2695.18
+3,Distance,Average Request Hop Count,1.0
