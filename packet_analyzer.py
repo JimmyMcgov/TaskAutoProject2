@@ -1,7 +1,6 @@
 import filter_packets as filter
 import packet_parser as parser
 import compute_metrics as compute
-from pathlib import Path
 
 def main():
     filepaths = [
@@ -9,24 +8,25 @@ def main():
         "Captures/Node2.txt",
         "Captures/Node3.txt",
         "Captures/Node4.txt"
-        ]
-    
-    # creates parsed file directory
-    Path("filtered").mkdir(exist_ok = True)
+    ]
 
     nodeCount = 1
     for nodePath in filepaths:
+
         # Read valid icmp entries in a 
         # node. Drops unreachables
         icmpList = filter.readNCAP(nodePath)
 
         # Passes valid icmp list into parser
-        # Parser then creates a node#_filtered.csv file
-        # for compute
+        # Parser creates the filtered directory then
+        # dumps output of each filtered node into 
+        # filtered/Node#_filtered.csv
         parsedFile = parser.process_node_file(icmpList, nodeCount)
 
-        # Reads a node#_filtered.csv and outputs contents
-        # in a single aggregate file
+        # Reads a node#_filtered.csv to perform calculations
+        # Creates the computed directory then
+        # dumps output of each calculation into 
+        # computed/project_2_Node#_results.csv
         compute.calculate_metrics(parsedFile, nodeCount)
         
 main()

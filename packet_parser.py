@@ -93,8 +93,11 @@ def process_node_file(icmpList, nodeCount):
     processes a single node file and writes filtered data to CSV
     """
     parsed = parse_packets(icmpList)
+    
+    Path("filtered/").mkdir(exist_ok = True)
     output_file = f"filtered/Node{nodeCount}_filtered.csv"
     Path(output_file).touch()
+
     write_filtered_csv(parsed, output_file)
     print(f"Packet_parser.py created: {output_file}")
 

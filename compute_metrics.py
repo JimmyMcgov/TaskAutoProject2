@@ -123,7 +123,7 @@ def calculate_metrics(parsed_file, node_id = 1):
         thru = ((stats['bytes_req_sent'] / 1000) / sum_rtt) if sum_rtt > 0 else 0
         good = ((stats['payload_req_sent'] / 1000) / sum_rtt) if sum_rtt > 0 else 0
 
-        # mapping to output format
+        # Mapping to output format
         output_rows = [
             ['Node', 'Category', 'Metric', 'Value'],
             [node_id, 'Size', 'Requests Sent', stats['req_sent']],
@@ -141,6 +141,7 @@ def calculate_metrics(parsed_file, node_id = 1):
             [node_id, 'Distance', 'Average Request Hop Count', round(avg_hops, 2)]
         ]
 
+        # File setup and dump
         file_path = f"computed/project_2_Node{node_id}_results.csv"
         Path("computed/").mkdir(exist_ok = True)
         Path(file_path).touch()

@@ -25,21 +25,3 @@ def readNCAP(filepath):
             icmp_lines.append(line.rstrip("\n"))
 
     return icmp_lines
-
-def test():
-    pass
-    # generate a test file
-    # filepath = "Captures/Node1.txt"
-    # icmpList = readNCAP(filepath)
-    # with open ("testFile.csv", "w") as someFile:
-    #     for entry in icmpList:
-    #         someFile.writelines(entry + "\n")
-
-    # Use this to view the indicies of
-    # strip().split()
-    # someLine = "    441 590.404752     192.168.100.1         192.168.100.2         ICMP     74     Echo (ping) request  id=0x0001, seq=91/23296, ttl=128 (reply in 442)"
-    # someLine = someLine.strip().split()
-    # print(someLine)
-
-
-# test()
