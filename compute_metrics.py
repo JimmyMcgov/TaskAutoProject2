@@ -24,8 +24,13 @@ def calculate_metrics(parsed_file, node_id=1):
         with open(parsed_file, mode="r") as f:
             reader = csv.DictReader(f)
             for row in reader:
+
+                # we are assuming first request is 
+                # from the host
                 if host_ip is None:
                     host_ip = row['src']
+
+                # packet info
                 src = row['src']
                 dest = row['dst']
                 t = float(row['time'])
@@ -41,49 +46,61 @@ def calculate_metrics(parsed_file, node_id=1):
                         stats['req_sent'] += 1
                         stats['bytes_req_sent'] += b
                         stats['payload_req_sent'] += payload
+
+                        # store timestamp for RTT calculation
+                        requests[(p_id, p_seq)] = t
+
                     elif dest == host_ip:
                         stats['req_recieved'] += 1
-                    #store timestamp for RTT calculation
-                    requests[(p_id, p_seq)] = t
+
 
                 elif p_type == 'reply':
+                    
                     if src == host_ip:
                         stats['rep_sent'] += 1
+
                     elif dest == host_ip:
                         stats['rep_recieved'] += 1
                         stats['bytes_req_recv'] += b
                         stats['payload_req_recv'] += payload
 
-                    #match reply with original request
-                    if(p_id, p_seq) in requests:
-                        req_t = requests[(p_id, p_seq)]
-                        rtt = t - req_t
+                        # match reply with original request
+                        if(p_id, p_seq) in requests:
+                            req_t = requests[(p_id, p_seq)]
+                            rtt = t - req_t
 
-                        stats['total_rtt'] += rtt
-                        stats['matched_pairs'] += 1
+                            stats['total_rtt'] += rtt
+                            stats['matched_pairs'] += 1
 
-                        #hop count calculation using standard ttl baselines
-                        #linux, mac, IoT
+                        # hop count calculation using standard ttl baselines
+                        # linux, mac, IoT
                         if ttl <= 64: 
-                            stats['total_hops'] += (64 - ttl)
-                        #Windows
+                            stats['total_hops'] += (64 - ttl) + 1
+                        # Windows
                         elif ttl <= 128: 
-                            stats['total_hops'] += (128 - ttl)
-                        #network devices
+                            stats['total_hops'] += (128 - ttl) + 1
+                        # network devices
                         else: 
-                            stats['total_hops'] += (255 - ttl)
+                            stats['total_hops'] += (255 - ttl) + 1
 
-        #Derived averages
+        # Derived averages
         avg_rtt_ms = (stats['total_rtt'] * 1000) / stats['matched_pairs'] if stats['matched_pairs'] > 0 else 0
+
         avg_delay_us = (stats['total_rtt'] * 1000000) / stats['matched_pairs'] if stats['matched_pairs'] > 0 else 0
         avg_hops = stats['total_hops'] / stats['matched_pairs'] if stats['matched_pairs'] > 0 else 0
 
-        #Throughput/Goodput (sum of request bytes / sum of RTT)
-        sum_rtt = stats['total_rtt']
-        thru = ((stats['bytes_req_sent'] / 1024) / sum_rtt) if sum_rtt > 0 else 0
-        good = ((stats['payload_req_sent'] / 1024) / sum_rtt) if sum_rtt > 0 else 0
+        # print(f"{node_id}")
+        # print(f"Total RTT: {stats['total_rtt']}")
+        # print(f"Matched Pairs: {stats['matched_pairs']}")
+        # print(f"Total hops: {stats['total_rtt']}")
+        # print()
 
-        #mapping to output format
+        # Throughput/Goodput (sum of request bytes / sum of RTT)
+        sum_rtt = stats['total_rtt']
+        thru = ((stats['bytes_req_sent'] / 1000) / sum_rtt) if sum_rtt > 0 else 0
+        good = ((stats['payload_req_sent'] / 1000) / sum_rtt) if sum_rtt > 0 else 0
+
+        # mapping to output format
         output_rows = [
             ['Node', 'Category', 'Metric', 'Value'],
             [node_id, 'Size', 'Requests Sent', stats['req_sent']],
