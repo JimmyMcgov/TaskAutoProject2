@@ -7,6 +7,7 @@ def calculate_metrics(parsed_file, node_id=1):
     #Dictionaries used to track requests for RTT/Matching
     #key is (id, seq)
     requests = {}
+    recieved_requests = {}
     
     #accumulators
     stats = {
@@ -14,7 +15,9 @@ def calculate_metrics(parsed_file, node_id=1):
             'rep_sent': 0, 'rep_recieved': 0,
             'bytes_req_sent': 0, 'bytes_req_recv': 0,
             'payload_req_sent': 0, 'payload_req_recv': 0,
-            'total_rtt': 0, 'total_hops': 0, 'matched_pairs': 0
+            'total_rtt': 0, 'total_hops': 0, 'matched_pairs': 0,
+            'total_reply_delay': 0, 'delay_pairs': 0
+            
     }
 
     host_ip = None
@@ -53,11 +56,19 @@ def calculate_metrics(parsed_file, node_id=1):
                     elif dest == host_ip:
                         stats['req_recieved'] += 1
 
+                        recieved_requests[(p_id, p_seq)] = t
+
 
                 elif p_type == 'reply':
                     
                     if src == host_ip:
                         stats['rep_sent'] += 1
+
+                        if (p_id, p_seq) in recieved_requests:
+                            req_t = recieved_requests.pop((p_id, p_seq))
+                            delay = t - req_t
+                            stats['total_reply_delay'] += delay
+                            stats['delay_pairs'] += 1
 
                     elif dest == host_ip:
                         stats['rep_recieved'] += 1
@@ -86,7 +97,7 @@ def calculate_metrics(parsed_file, node_id=1):
         # Derived averages
         avg_rtt_ms = (stats['total_rtt'] * 1000) / stats['matched_pairs'] if stats['matched_pairs'] > 0 else 0
 
-        avg_delay_us = (stats['total_rtt'] * 1000000) / stats['matched_pairs'] if stats['matched_pairs'] > 0 else 0
+        avg_delay_us = (stats['total_reply_delay'] * 1000000) / stats['delay_pairs'] if stats['delay_pairs'] > 0 else 0
         avg_hops = stats['total_hops'] / stats['matched_pairs'] if stats['matched_pairs'] > 0 else 0
 
         # print(f"{node_id}")
