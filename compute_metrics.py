@@ -55,6 +55,8 @@ def calculate_metrics(parsed_file, node_id=1):
 
                     elif dest == host_ip:
                         stats['req_recieved'] += 1
+                        stats['bytes_req_recv'] += b
+                        stats['payload_req_recv'] += payload
 
                         recieved_requests[(p_id, p_seq)] = t
 
@@ -72,9 +74,7 @@ def calculate_metrics(parsed_file, node_id=1):
 
                     elif dest == host_ip:
                         stats['rep_recieved'] += 1
-                        stats['bytes_req_recv'] += b
-                        stats['payload_req_recv'] += payload
-
+                        
                         # match reply with original request
                         if(p_id, p_seq) in requests:
                             req_t = requests[(p_id, p_seq)]
