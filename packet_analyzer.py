@@ -28,12 +28,5 @@ def main():
         # Reads a node#_filtered.csv and outputs contents
         # in a single aggregate file
         compute.calculate_metrics(parsedFile, nodeCount)
-
-        # Seperator between each summary
-        nodeCount += 1
-        print()
-
-    
-
+        
 main()
-
