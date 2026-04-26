@@ -12,45 +12,42 @@ Node,Category,Metric,Value
 1,Time,Request Goodput (kB/sec),256.1
 1,Time,Average Reply Delay (us),55.51
 1,Distance,Average Request Hop Count,1.91
-Node,Category,Metric,Value
-1,Size,Requests Sent,70
-1,Size,Requests Recieved,28
-1,Size,Replies Sent,28
-1,Size,Replies Recived,70
-1,Size,Request Bytes Sent,58672
-1,Size,Request Bytes Recieved,30008
-1,Size,Request Data Sent,55732
-1,Size,Request Data Recieved,28832
-1,Time,Average RTT (ms),0.05
-1,Time,Request Throughput (kB/sec),15896.0
-1,Time,Request Goodput (kB/sec),15099.4
-1,Time,Average Reply Delay (us),2253.29
-1,Distance,Average Request Hop Count,1.0
-Node,Category,Metric,Value
-1,Size,Requests Sent,49
-1,Size,Requests Recieved,17
-1,Size,Replies Sent,17
-1,Size,Replies Recived,49
-1,Size,Request Bytes Sent,21486
-1,Size,Request Bytes Recieved,5546
-1,Size,Request Data Sent,19428
-1,Size,Request Data Recieved,4832
-1,Time,Average RTT (ms),0.05
-1,Time,Request Throughput (kB/sec),8560.2
-1,Time,Request Goodput (kB/sec),7740.2
-1,Time,Average Reply Delay (us),2695.18
-1,Distance,Average Request Hop Count,1.0
-Node,Category,Metric,Value
-1,Size,Requests Sent,40
-1,Size,Requests Recieved,4
-1,Size,Replies Sent,4
-1,Size,Replies Recived,40
-1,Size,Request Bytes Sent,12992
-1,Size,Request Bytes Recieved,2000
-1,Size,Request Data Sent,11312
-1,Size,Request Data Recieved,1832
-1,Time,Average RTT (ms),0.05
-1,Time,Request Throughput (kB/sec),6470.1
-1,Time,Request Goodput (kB/sec),5633.5
-1,Time,Average Reply Delay (us),3237.25
-1,Distance,Average Request Hop Count,1.0
+2,Size,Requests Sent,70
+2,Size,Requests Recieved,28
+2,Size,Replies Sent,28
+2,Size,Replies Recived,70
+2,Size,Request Bytes Sent,58672
+2,Size,Request Bytes Recieved,30008
+2,Size,Request Data Sent,55732
+2,Size,Request Data Recieved,28832
+2,Time,Average RTT (ms),0.05
+2,Time,Request Throughput (kB/sec),15896.0
+2,Time,Request Goodput (kB/sec),15099.4
+2,Time,Average Reply Delay (us),2253.29
+2,Distance,Average Request Hop Count,1.0
+3,Size,Requests Sent,49
+3,Size,Requests Recieved,17
+3,Size,Replies Sent,17
+3,Size,Replies Recived,49
+3,Size,Request Bytes Sent,21486
+3,Size,Request Bytes Recieved,5546
+3,Size,Request Data Sent,19428
+3,Size,Request Data Recieved,4832
+3,Time,Average RTT (ms),0.05
+3,Time,Request Throughput (kB/sec),8560.2
+3,Time,Request Goodput (kB/sec),7740.2
+3,Time,Average Reply Delay (us),2695.18
+3,Distance,Average Request Hop Count,1.0
+4,Size,Requests Sent,40
+4,Size,Requests Recieved,4
+4,Size,Replies Sent,4
+4,Size,Replies Recived,40
+4,Size,Request Bytes Sent,12992
+4,Size,Request Bytes Recieved,2000
+4,Size,Request Data Sent,11312
+4,Size,Request Data Recieved,1832
+4,Time,Average RTT (ms),0.05
+4,Time,Request Throughput (kB/sec),6470.1
+4,Time,Request Goodput (kB/sec),5633.5
+4,Time,Average Reply Delay (us),3237.25
+4,Distance,Average Request Hop Count,1.0

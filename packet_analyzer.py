@@ -28,5 +28,5 @@ def main():
         # dumps output of each calculation into 
         # computed/project_2_Node#_results.csv
         compute.calculate_metrics(parsedFile, nodeCount)
-        
+        nodeCount += 1
 main()

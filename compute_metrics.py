@@ -1,5 +1,5 @@
 import csv
-# import os
+import os
 from pathlib import Path
 import sys
 
@@ -26,6 +26,7 @@ def calculate_metrics(parsed_file, node_id = 1):
     # Ethernet(14) + IP(20) + ICMP(8)
     HEADER_SIZE = 42 
     try:
+
         with open(parsed_file, mode="r") as f:
             reader = csv.DictReader(f)
             for row in reader:
@@ -125,7 +126,6 @@ def calculate_metrics(parsed_file, node_id = 1):
 
         # Mapping to output format
         output_rows = [
-            ['Node', 'Category', 'Metric', 'Value'],
             [node_id, 'Size', 'Requests Sent', stats['req_sent']],
             [node_id, 'Size', 'Requests Recieved', stats['req_recieved']],
             [node_id, 'Size', 'Replies Sent', stats['rep_sent']],
@@ -145,10 +145,13 @@ def calculate_metrics(parsed_file, node_id = 1):
         #file_path = f"computed/project_2_Node{node_id}_results.csv"
         file_path = "project_2_results.csv"
         #Path("computed/").mkdir(exist_ok = True)
-        Path(file_path).touch()
+        fileExists = os.path.exists(file_path)
+        isEmpty = os.path.getsize(file_path) == 0 if fileExists else True
 
         with open(file_path, mode = 'a', newline = '') as csvfile:
             writer = csv.writer(csvfile)
+            if not fileExists or isEmpty:
+                writer.writerow(['Node', 'Category', 'Metric', 'Value'])
             writer.writerows(output_rows)
 
     except Exception as e:
